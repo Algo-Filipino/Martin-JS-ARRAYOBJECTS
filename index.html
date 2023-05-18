@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Students by Program</title>
+</head>
+<body>
+  <h1>Students by Program</h1>
+  <div id="studentsContainer"></div>
+
+  <script>
+
+
+    // Define an array of programs
+    var programs = ['Computer Science', 'Business Administration', 'Engineering', 'Psychology'];
+
+    // Define an array of hobbies
+    var hobbies = ['singing', 'cooking', 'dancing', 'painting', 'reading', 'sports'];
+
+    // Function to generate a random hobby
+    function getRandomHobby() {
+      return hobbies[Math.floor(Math.random() * hobbies.length)];
+    }
+
+    // Define a constructor function for Student objects
+    function Student(fullname, program, gender, hobbies) {
+      this.fullname = fullname;
+      this.program = program;
+      this.gender = gender;
+      this.hobbies = hobbies;
+    }
+
+    // Create an array to store the student objects
+    var students = [];
+
+    // Array of student names with associated genders
+    var studentNames = [
+      { name: 'John Doe', gender: 'Male' },
+      { name: 'Jane Smith', gender: 'Female' },
+      { name: 'Michael Johnson', gender: 'Male' },
+      { name: 'Emily Davis', gender: 'Female' },
+      { name: 'Robert Wilson', gender: 'Male' },
+      { name: 'Olivia Brown', gender: 'Female' },
+      { name: 'David Taylor', gender: 'Male' },
+      { name: 'Sophia Anderson', gender: 'Female' },
+      { name: 'Daniel Martinez', gender: 'Male' },
+      { name: 'Ava Jackson', gender: 'Female' }
+    ];
+
+    // Create 10 student objects
+    for (var i = 0; i < 10; i++) {
+      var nameIndex = Math.floor(Math.random() * studentNames.length);
+      var student = studentNames.splice(nameIndex, 1)[0];
+
+      var fullname = student.name;
+      var program = programs[Math.floor(Math.random() * programs.length)];
+      var gender = student.gender;
+
+      var studentHobbies = [];
+      for (var j = 0; j < 3; j++) {
+        studentHobbies.push(getRandomHobby());
+      }
+
+      var studentObject = new Student(fullname, program, gender, studentHobbies);
+      students.push(studentObject);
+    }
+
+    // Display students by program
+    programs.forEach(function (program) {
+      var filteredStudents = students.filter(function (student) {
+        return student.program === program;
+      });
+
+      var programHeading = document.createElement('h2');
+      programHeading.textContent = program;
+      document.getElementById('studentsContainer').appendChild(programHeading);
+
+      filteredStudents.forEach(function (student) {
+        var studentInfo = document.createElement('p');
+        studentInfo.innerHTML = 'Name: ' + student.fullname + '<br>Gender: ' + student.gender + '<br>Hobbies: ' + student.hobbies.join(', ');
+        document.getElementById('studentsContainer').appendChild(studentInfo);
+      });
+    });
+  </script>
+</body>
+</html>
